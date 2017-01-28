@@ -1,0 +1,49 @@
+-> Sun Jan 15 01:37:07 PHT 2017
+Front End:
+There will be a signup page where users can create usernames and passwords.
+There will be a login page where the user must type his email address and password.
+He will then be redirected to the forum proper where all posts will be displayed next to the
+username of the poster.
+There will also be a box where the user can type and submit his own posts.
+
+Back End:
+There will be two tables, called "Thread" and "Members".
+The thread table has three columns: postid, memberid and post
+The postid is an AUTO_INCREMENT column, the memberid should come from some global variable and
+the post consists of the text of the post itself.
+
+On second thought, maybe the memberid can just be the username provided we require all usernames
+to be unique, we can get rid of the email address and some arbitrary id number for the user.
+So, instead of memberid, we should have username.
+
+The members table consists of only two columns, the username and password.
+Care must be taken in reloading the page as the $un variable might be reset.
+-> Sun Jan 15 01:53:57 PHT 2017
+mysql -u root -p
+create database forum;
+grant all on forum.* to 'dennis'@'localhost';
+exit
+mysql -u dennis -p
+create table members (username varchar(30), password varchar(30), primary key (username)) engine myisam;
+CREATE TABLE thread (postid INT UNSIGNED NOT NULL AUTO_INCREMENT KEY, username VARCHAR(30), post VARCHAR(128)) ENGINE MyISAM;
+-> Sun Jan 15 20:48:36 PHT 2017
+signup page working, no encryption yet
+// RESULT IS NULL IF MYSQLI CANNOT FIND YOUR QUERY
+// when a form is submitted the $_POST array is populated even though some fields are left blank
+// the isset() function merely tests whether an array element exists at all, it doesn't
+// care about its contents
+-> Thu Jan 26 01:46:17 PHT 2017
+almost done with thread viewer
+Modify the comments.php for the new comment viewer.
+-> Fri Jan 27 19:26:45 PHT 2017
+The biggest problem is always some discreet way of passing sensitive variables
+from one page to the other.
+I heard session variables do that so now we will settle for the $_POST and $_GET global
+variables.
+-> Fri Jan 27 22:31:59 PHT 2017
+it works roughly as expected
+The user will login if he wants to.
+He is then redirected to forum.php wherein he can select any thread he wants to view.
+Then as soon as he clicks on a thread, he will be redirected to thread.php
+which displays all the comments in the thread.
+In a sence, the mechanics of thread.php is the same as forum.php which is the same as ../comments.php
